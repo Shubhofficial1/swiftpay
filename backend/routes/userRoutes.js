@@ -11,6 +11,6 @@ import authMiddleware from "../middlewares/authMiddleware.js";
 router.route("/").put(authMiddleware, updateProfile);
 router.route("/signup").post(signup);
 router.route("/signin").post(signin);
-router.route("/bulk").get(searchUsers);
+router.route("/bulk").get(authMiddleware, searchUsers);
 
 export default router;
