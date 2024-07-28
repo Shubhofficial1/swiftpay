@@ -107,4 +107,30 @@ const updateProfile = async (req, res) => {
   });
 };
 
-export { signup, signin, updateProfile };
+const searchUsers = async (req, res) => {
+  const filter = req.query.filter || "";
+
+  try {
+    const usersData = await User.find({
+      $or: [
+        {
+          firstname: {
+            $regex: filter,
+            $options: "i",
+          },
+        },
+        {
+          lastname: {
+            $regex: filter,
+            $options: "i",
+          },
+        },
+      ],
+    }).select("-password");
+    res.json({ users: usersData });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { signup, signin, updateProfile, searchUsers };
