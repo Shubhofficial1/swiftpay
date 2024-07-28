@@ -1,5 +1,6 @@
 import zod from "zod";
 import User from "../models/userModel.js";
+import Account from "../models/accountModel.js";
 import jwt from "jsonwebtoken";
 
 const signupBody = zod.object({
@@ -35,6 +36,15 @@ const signup = async (req, res) => {
   });
 
   const userId = createdUser._id;
+
+  // -----  create new account ------
+
+  await Account.create({
+    userId,
+    balance: 1 + Math.random() * 10000,
+  });
+
+  // --------------------------
 
   const token = jwt.sign(
     {
