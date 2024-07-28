@@ -86,4 +86,25 @@ const signin = async (req, res) => {
   });
 };
 
-export { signup, signin };
+const updateProfileBody = zod.object({
+  firstname: zod.string().optional(),
+  lastname: zod.string().optional(),
+  password: zod.string().optional(),
+});
+
+const updateProfile = async (req, res) => {
+  const { success } = updateProfileBody.safeParse(req.body);
+  if (!success) {
+    return res.json({
+      message: "Invalid body",
+    });
+  }
+
+  await User.updateOne({ _id: req.userId }, req.body);
+
+  res.json({
+    message: "Updated successfully",
+  });
+};
+
+export { signup, signin, updateProfile };

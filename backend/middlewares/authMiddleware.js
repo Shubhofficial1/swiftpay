@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     return res.status(403).json({
       message: "Invalid Headers",
@@ -15,6 +14,7 @@ const authMiddleware = async (req, res, next) => {
     req.userId = decoded.userId;
     next();
   } catch (err) {
+    console.log(err);
     return res.status(403).json({
       message: "Unauthorized",
     });
