@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
+import accountRoutes from "./routes/accountRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/account", accountRoutes);
 
 const PORT = process.env.PORT || 5000;
 const NODE_ENV = process.env.NODE_ENV || "development";
